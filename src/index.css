@@ -14,12 +14,16 @@ body {
   margin: 0;
   justify-content: center;
   display: flex;
-  min-width: 320px;
+  min-width: 100vh;
   min-height: 100vh;
 }
 
 p,ul,li{
     margin: 0;
+}
+a{
+  all:unset;
+  cursor: pointer;
 }
 
 li {

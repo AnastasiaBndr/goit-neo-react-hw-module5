@@ -1,0 +1,14 @@
+:root {
+  --color: rgb(143, 0, 190);
+}
+
+.link:hover,
+.link:focus {
+    color: var(--color);
+    text-decoration: underline;
+}
+
+.active {
+  color: var(--color);
+  text-decoration: none;
+}

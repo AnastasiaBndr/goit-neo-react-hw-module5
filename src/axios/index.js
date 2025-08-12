@@ -1,3 +1,3 @@
-import { ApiComponent } from "./photo-api";
+import { ApiComponent } from "./apiComponent";
 
 export { ApiComponent };
