@@ -1,0 +1,44 @@
+:root {
+  --username-color: #b6b6b6;
+}
+
+.container {
+  max-width: 400px;
+}
+.name {
+  font-size: 16px;
+}
+.avatar-name-container {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.container img {
+  margin-top: 5px;
+  border-radius: 4px;
+}
+
+.date {
+  font-size: 12px;
+  color: var(--username-color);
+}
+
+.date::before,
+.date::after {
+  display: block;
+  content: " ";
+  border-bottom: 1px solid;
+  border-color: var(--username-color);
+  margin: 5px 0;
+}
+.username {
+  font-size: 12px;
+  color: var(--username-color);
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

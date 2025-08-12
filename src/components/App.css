@@ -1,0 +1,50 @@
+:root {
+  --button-color: rgb(0, 128, 96);
+  --button-hover-color: rgb(0, 110, 82);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  padding: 15px;
+}
+
+h1 {
+  margin-bottom: 0;
+  color: var(--button-color);
+}
+
+button {
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  padding: 6px 8px;
+  width: fit-content;
+  height: fit-content;
+  color: #ffffff;
+  background: var(--button-color);
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+}
+
+button:hover:hover,
+button:hover {
+  background: var(--button-hover-color);
+}
+
+.gallery-loader-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
