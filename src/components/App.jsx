@@ -10,6 +10,7 @@ import MovieReviews from "./MovieReviews";
 import MovieCast from "./MovieCast";
 import Loader from "./Loader";
 import Navigation from "./Navigation";
+import MovieTrailer from "./MovieTrailer";
 
 //Pages
 import { HomePage, MoviesPage, NotFoundPage, MovieDetailsPage } from "../pages";
@@ -19,6 +20,7 @@ import { ApiComponent } from "../axios";
 
 //styles
 import "./App.css";
+
 
 function App() {
   ReactModal.setAppElement("#root");
@@ -43,6 +45,10 @@ function App() {
             <Route
               path="reviews"
               element={<MovieReviews imgPath={imgPath} />}
+            />
+            <Route
+              path="trailer"
+              element={<MovieTrailer />}
             />
             <Route path="cast" element={<MovieCast imgPath={imgPath} />} />
           </Route>

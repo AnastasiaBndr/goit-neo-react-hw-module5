@@ -3,7 +3,6 @@ import css from "./SearchBar.module.css";
 
 export default function SearchBar({onSubmit}) {
   return (
-    <header>
       <form className={css.form} onSubmit={onSubmit}>
         <input
           className={css.input}
@@ -14,9 +13,6 @@ export default function SearchBar({onSubmit}) {
         />
         <button type="submit" >Search</button>
       </form>
-    </header>
-
-
 
   );
 }

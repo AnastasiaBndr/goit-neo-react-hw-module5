@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useLocation } from "react-router-dom";
 import { ApiComponent } from "../../axios";
 import css from "./MovieDetailsPage.module.css";
 import clsx from "clsx";
+import Loader from "../../components/Loader";
+import Error from "../../components/Error";
 
 const buildLinkClass = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
@@ -11,81 +13,96 @@ const buildLinkClass = ({ isActive }) => {
 
 export default function MovieDetailsPage({ imgPath }) {
   const { movieId } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [details, setDetails] = useState();
-  const [videos, setVideos] = useState();
+
+  const location = useLocation();
+
   useEffect(() => {
     const api = new ApiComponent();
     async function fetchData() {
       try {
+        setLoading(true);
+        setError(false);
+
         const details = await api.fetchDetails(movieId);
-        const videos = await api.fetchDetails(movieId, "/videos");
         setDetails(details);
-        setVideos(videos.results.filter((video) => video.type == "Trailer"));
-      } catch (err) {
-        console.log(err);
+      } catch {
+        setError(true);
       } finally {
-        console.log("Fine!");
+        setLoading(false);
       }
     }
     fetchData();
   }, [movieId]);
-  return (
-    details && (
-      <div>
-        <div>
-          <img
-            src={`${imgPath}${details.poster_path}`}
-            alt={details.name ?? details.title}
-          />
-          <ul>
-            {videos.map((video) => {
-              return (
-                <li key={video.id}>
-                  <iframe
-                    width="420"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${video.key}`}
-                  ></iframe>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
 
-        <p>{details.overview}</p>
-        <div>
-          <p>Production companies</p>
-          <ul>
-            {details.production_companies.map((company) => {
-              return (
-                <li key={company.id}>
-                  <img
-                    src={`${imgPath}${company.logo_path}`}
-                    alt={company.name}
-                  />
-                </li>
-              );
-            })}
-          </ul>
+  console.log(details);
+  return (
+    <>
+      {details && (
+        <div className={css.container}>
+          <div className={css["image-description-container"]}>
+            <img
+              className={css.poster}
+              src={`${imgPath}${details.poster_path}`}
+              alt={details.name ?? details.title}
+            />
+
+            <div className={css.descriptions}>
+              <h2 className={css.name}>{details.name ?? details.title}</h2>
+
+              <p className={css.tagline}>{details.tagline}</p>
+              <ul className={css["genres-container"]}>
+                {details.genres?.map((genre) => {
+                  return (
+                    <li key={genre.id} className={css["genre-item"]}>
+                      {genre.name}
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <p className={css.description}>{details.overview}</p>
+              <div>
+                <p>Countries:</p>
+                <ul>
+                  {details.production_countries.map((country) => {
+                    return <li key={country.iso_3166_1}>{country.name}</li>;
+                  })}
+                </ul>
+              </div>
+
+              <p>Release date: {details.release_date}</p>
+            </div>
+          </div>
+
+          <NavLink
+            className={buildLinkClass}
+            to={"cast"}
+            state={{ from: location }}
+          >
+            Cast
+          </NavLink>
+          <NavLink
+            className={buildLinkClass}
+            to={"reviews"}
+            state={{ from: location }}
+          >
+            Reviews
+          </NavLink>
+          <NavLink
+            className={buildLinkClass}
+            to={"trailer"}
+            state={{ from: location }}
+          >
+            Trailer
+          </NavLink>
+          <Outlet />
         </div>
-        <div>
-          <p>Production countries</p>
-          <ul>
-            {details.production_countries.map((country) => {
-              return <li key={country.iso_3166_1}>{country.name}</li>;
-            })}
-          </ul>
-        </div>
-        <p>{details.tagline}</p>
-        <p>Release date: {details.release_date}</p>
-        <NavLink className={buildLinkClass} to={"cast"}>
-          Cast
-        </NavLink>
-        <NavLink className={buildLinkClass} to={"reviews"}>
-          Reviews
-        </NavLink>
-        <Outlet />
-      </div>
-    )
+      )}
+      {loading && <Loader />}
+      {error && <Error />}
+    </>
   );
 }

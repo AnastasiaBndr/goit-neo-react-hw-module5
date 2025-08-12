@@ -8,12 +8,12 @@ const override = {
 
 export default function Loader() {
   return (
-    <><PuffLoader
+    <div className={css.loader}><PuffLoader
       color={"black"}
       size={80}
       loading={true}
       cssOverride={override}
       aria-label="Loading Spinner"
-      data-testid="loader" /></>
+      data-testid="loader" /></div>
   );
 }

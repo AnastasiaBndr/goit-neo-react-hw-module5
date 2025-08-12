@@ -1,0 +1,25 @@
+.video-frame {
+  width: calc(100vw/1.5);
+  height: 300px;
+  margin-top: 0;
+  display: border-box;
+
+  border: 7px solid #222;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+}
+
+.no-trailer {
+  width: 100%;
+  height: 200px;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 7px solid #222;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 1.5rem;
+}

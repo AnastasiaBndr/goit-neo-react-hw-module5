@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { ApiComponent } from "../../axios";
 import MovieList from "../../components/MovieList";
+import LoadMoreBtn from "../../components/LoadMoreBtn";
+import Loader from "../../components/Loader";
+import Error from "../../components/Error";
 
-export default function HomePage({imgPath}) {
+export default function HomePage({ imgPath }) {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [page, setPage] = useState(1);
-
 
   useEffect(() => {
     async function fetchData() {
@@ -23,12 +25,12 @@ export default function HomePage({imgPath}) {
         }
 
         const data = await api.fetchTrending(page);
-        const totalHits = data.total;
-        const totalPages = Math.ceil(totalHits / api.limit);
+        const totalHits = data.total_pages;
+        const totalPages = Math.ceil(totalHits / api.getLimit());
 
         setTrending((prev) => {
           if (page === 1) return data.results;
-          return [...prev, data.results];
+          return [...prev, ...data.results];
         });
 
         setLoadMore(page < totalPages);
@@ -42,9 +44,16 @@ export default function HomePage({imgPath}) {
     fetchData();
   }, [page]);
 
+  const handleLoadMore = () => {
+    setPage((prev) => prev + 1);
+  };
+
   return (
     <>
-      <MovieList movies={trending} imgPath={imgPath} />
+      {trending.length>0 && <MovieList movies={trending} imgPath={imgPath} />}
+      {loadMore && <LoadMoreBtn onClick={handleLoadMore} />}
+      {loading && <Loader />}
+      {error && <Error/>}
     </>
   );
 }

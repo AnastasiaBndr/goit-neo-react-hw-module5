@@ -8,16 +8,21 @@ axios.defaults.headers = {
 }
 
 export class ApiComponent {
-  limit = 20;
+  #limit = 20;
 
   baseSearchParams = {
-    include_adult:false,
+    include_adult: false,
   };
 
   #details = {
-    trending: '/trending/all/week',
+    trending: '/trending/movie/week',
     credits: '/credit/credit_id',
-    details:'movie'
+    details: 'movie',
+    search: '/search/movie',
+  }
+
+  getLimit() {
+    return this.#limit;
   }
 
   async fetchTrending(page) {
@@ -30,9 +35,19 @@ export class ApiComponent {
     return resp.data;
   }
 
-  async fetchDetails(id,param="") {
+  async fetchDetails(id, param = "") {
 
     const resp = await axios.get(`${this.#details.details}/${id}${param}`)
+    return resp.data;
+  }
+
+  async fetchByName(query, page) {
+    const searchParams = new URLSearchParams({
+      ...this.baseSearchParams,
+      page: page,
+      query:query
+    });
+    const resp = await axios.get(`${this.#details.search}?${searchParams.toString()}`);
     return resp.data;
   }
 

@@ -1,30 +1,33 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ApiComponent } from "../../axios";
+import Loader from "../Loader";
+import Error from "../Error";
 import css from "./MovieReviews.module.css";
 
 export default function MovieReviews({ imgPath }) {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const noAvatar = new URL("../../assets/images/no_avatar.jpg", import.meta.url)
     .href;
-  console.log(noAvatar)
   useEffect(() => {
     async function fetchCredits() {
       const api = new ApiComponent();
       try {
+        setLoading(true);
+        setError(false);
         const reviews = await api.fetchDetails(movieId, "/reviews");
         setReviews(reviews.results);
-      } catch (err) {
-        console.log(err);
+      } catch {
+        setError(true);
       } finally {
-        console.log("Fine!");
+        setLoading(false);
       }
     }
     fetchCredits();
   }, [movieId]);
-
-  console.log(reviews);
   return (
     <>
       <ul>
@@ -44,11 +47,7 @@ export default function MovieReviews({ imgPath }) {
             return (
               <li key={id}>
                 <div>
-                  <img
-                    className={css.avatar}
-                    src={avatarSrc}
-                    alt=""
-                  />
+                  <img className={css.avatar} src={avatarSrc} alt="" />
                 </div>
 
                 <p>{author}</p>
@@ -62,6 +61,8 @@ export default function MovieReviews({ imgPath }) {
             );
           })}
       </ul>
+      {loading && <Loader />}
+      {error && <Error />}
     </>
   );
 }

@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ApiComponent } from "../../axios";
+import Loader from "../Loader";
+import Error from "../Error";
 
 export default function MovieCast({ imgPath }) {
   const [credits, setCredits] = useState([]);
   const { movieId } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
     async function fetchCredits() {
+      setLoading(true);
+      setError(false);
       const api = new ApiComponent();
       try {
         const credits = await api.fetchDetails(movieId, "/credits");
         setCredits(credits.cast.filter((credit) => credit.profile_path));
-      } catch (err) {
-        console.log(err);
+      } catch {
+        setError(true);
       } finally {
-        console.log("Fine!");
+        setLoading(false);
       }
     }
     fetchCredits();
@@ -33,6 +39,8 @@ export default function MovieCast({ imgPath }) {
             );
           })}
       </ul>
+      {loading && <Loader />}
+      {error && <Error />}
     </>
   );
 }

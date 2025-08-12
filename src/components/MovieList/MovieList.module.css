@@ -4,3 +4,24 @@
     justify-content: center;
     gap:10px;
 }
+
+.image-container{
+  margin-top: 20px;
+}
+
+.image-container img {
+  object-fit: cover;
+  width: calc(100vw/5);
+  border-radius: 4px;
+  scale: 1;
+}
+
+.image-container p{
+  width: calc(100vw/5);
+}
+
+.image:hover, .image:focus {
+  cursor: pointer;
+  transition: scale 200ms;
+  scale: 1.04;
+}
