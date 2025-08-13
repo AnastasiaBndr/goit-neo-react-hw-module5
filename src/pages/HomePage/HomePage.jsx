@@ -4,6 +4,7 @@ import MovieList from "../../components/MovieList";
 import LoadMoreBtn from "../../components/LoadMoreBtn";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
+import css from "./HomePage.module.css"
 
 export default function HomePage({ imgPath }) {
   const [trending, setTrending] = useState([]);
@@ -50,10 +51,15 @@ export default function HomePage({ imgPath }) {
 
   return (
     <>
-      {trending.length>0 && <MovieList movies={trending} imgPath={imgPath} />}
-      {loadMore && <LoadMoreBtn onClick={handleLoadMore} />}
+      <div className={css["gallery-loadmore"]}>
+        {trending.length > 0 && (
+          <MovieList movies={trending} imgPath={imgPath} />
+        )}
+        {loadMore && <LoadMoreBtn onClick={handleLoadMore} />}
+      </div>
+
       {loading && <Loader />}
-      {error && <Error/>}
+      {error && <Error />}
     </>
   );
 }

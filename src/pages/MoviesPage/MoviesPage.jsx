@@ -5,6 +5,7 @@ import MovieList from "../../components/MovieList";
 import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import { useSearchParams } from "react-router-dom";
+import css from "./MoviesPage.module.css";
 
 export default function MoviesPage({ imgPath }) {
   const [movies, setMovies] = useState([]);
@@ -32,14 +33,14 @@ export default function MoviesPage({ imgPath }) {
         }
 
         const data = await api.fetchByName(query, page);
-        const totalHits = data.total_pages;
+
+        const totalHits = data.total_results;
         const totalPages = Math.ceil(totalHits / api.getLimit());
 
         setMovies((prev) => {
           if (page === 1) return data.results;
           return [...prev, ...data.results];
         });
-
         setLoadMore(page < totalPages);
       } catch {
         setError(true);
@@ -53,10 +54,14 @@ export default function MoviesPage({ imgPath }) {
   const handleLoadMore = () => {
     setPage((prev) => prev + 1);
   };
+
   return (
     <>
-      {movies.length > 0 && <MovieList movies={movies} imgPath={imgPath} />}
-      {loadMore && <LoadMoreBtn onClick={handleLoadMore} />}
+      <div className={css["gallery-loadmore"]}>
+        {movies.length > 0 && <MovieList movies={movies} imgPath={imgPath} />}
+        {loadMore && <LoadMoreBtn onClick={handleLoadMore} />}
+      </div>
+
       {loading && <Loader />}
       {error && <Error />}
     </>
