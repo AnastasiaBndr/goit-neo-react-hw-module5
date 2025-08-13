@@ -4,6 +4,7 @@
   justify-content: center;
   gap: 10px;
   margin-top: 20px;
+  max-width: 450px;
 }
 
 .image-container img {
@@ -28,5 +29,13 @@
 @media screen and (min-width: 768px) {
   .image-container p {
     font-size: 10px;
+  }
+
+  .image-container img, .image-container p{
+    width: 200px;
+  }
+
+  .gallery-container{
+    max-width: 750px;
   }
 }
