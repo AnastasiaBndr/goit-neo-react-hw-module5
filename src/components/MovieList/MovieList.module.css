@@ -1,27 +1,32 @@
-.gallery-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap:10px;
-}
-
-.image-container{
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
   margin-top: 20px;
 }
 
 .image-container img {
   object-fit: cover;
-  width: calc(100vw/5);
+  width: calc(100vw / 4);
+  background-color: gray;
   border-radius: 4px;
   scale: 1;
 }
 
-.image-container p{
-  width: calc(100vw/5);
+.image-container p {
+  width: calc(100vw / 4);
 }
 
-.image:hover, .image:focus {
+.image:hover,
+.image:focus {
   cursor: pointer;
   transition: scale 200ms;
   scale: 1.04;
+}
+
+@media screen and (min-width: 768px) {
+  .image-container p {
+    font-size: 10px;
+  }
 }

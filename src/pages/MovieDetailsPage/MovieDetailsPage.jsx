@@ -6,6 +6,8 @@ import css from "./MovieDetailsPage.module.css";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
+import { FaQuoteLeft } from "react-icons/fa";
+import { FaQuoteRight } from "react-icons/fa";
 
 const buildLinkClass = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
@@ -37,22 +39,65 @@ export default function MovieDetailsPage({ imgPath }) {
     fetchData();
   }, [movieId]);
 
-  console.log(details);
   return (
     <>
       {details && (
         <div className={css.container}>
           <div className={css["image-description-container"]}>
-            <img
-              className={css.poster}
-              src={`${imgPath}${details.poster_path}`}
-              alt={details.name ?? details.title}
-            />
+            <div>
+              <img
+                className={css.poster}
+                src={`${imgPath}${details.poster_path}`}
+                alt={details.name ?? details.title}
+              />
+              <div className={css["nav-links"]}>
+                <NavLink
+                  className={buildLinkClass}
+                  to={"cast"}
+                  state={{ from: location }}
+                >
+                  Cast
+                </NavLink>
+                <NavLink
+                  className={buildLinkClass}
+                  to={"reviews"}
+                  state={{ from: location }}
+                >
+                  Reviews
+                </NavLink>
+                <NavLink
+                  className={buildLinkClass}
+                  to={"trailer"}
+                  state={{ from: location }}
+                >
+                  Trailer
+                </NavLink>
+              </div>
+            </div>
 
             <div className={css.descriptions}>
-              <h2 className={css.name}>{details.name ?? details.title}</h2>
+              <div className={css["description-vote"]}>
+                <h2 className={css.name}>{details.name ?? details.title}</h2>
+                <div
+                  className={clsx(
+                    css["vote-average"],
+                    details.vote_average >= 8
+                      ? css["vote-perfect"]
+                      : details.vote_average >= 6
+                        ? css["vote-good"]
+                        : css["vote-bad"]
+                  )}
+                >
+                  {details.vote_average}
+                </div>
+              </div>
 
-              <p className={css.tagline}>{details.tagline}</p>
+              <div className={css["tagline-container"]}>
+                <FaQuoteLeft size="12px" className={css["quote-icon"]} />
+                <p className={css.tagline}> {details.tagline}</p>
+                <FaQuoteRight size="12px" className={css["quote-icon"]} />
+              </div>
+
               <ul className={css["genres-container"]}>
                 {details.genres?.map((genre) => {
                   return (
@@ -64,40 +109,30 @@ export default function MovieDetailsPage({ imgPath }) {
               </ul>
 
               <p className={css.description}>{details.overview}</p>
-              <div>
-                <p>Countries:</p>
-                <ul>
-                  {details.production_countries.map((country) => {
-                    return <li key={country.iso_3166_1}>{country.name}</li>;
-                  })}
-                </ul>
-              </div>
 
-              <p>Release date: {details.release_date}</p>
+              <ul className={css["countries-list"]}>
+                {details.production_countries.map((country) => {
+                  return (
+                    <li className={css["genre-item"]} key={country.iso_3166_1}>
+                      {country.name}
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <p className={css["genre-item"]}>
+                Release date: {details.release_date}
+              </p>
+              <div className={css["backdrop-wrapper"]}>
+                <img
+                  className={css.backdrop}
+                  src={`${imgPath}${details.backdrop_path}`}
+                  alt={details.name ?? details.title}
+                />
+              </div>
             </div>
           </div>
 
-          <NavLink
-            className={buildLinkClass}
-            to={"cast"}
-            state={{ from: location }}
-          >
-            Cast
-          </NavLink>
-          <NavLink
-            className={buildLinkClass}
-            to={"reviews"}
-            state={{ from: location }}
-          >
-            Reviews
-          </NavLink>
-          <NavLink
-            className={buildLinkClass}
-            to={"trailer"}
-            state={{ from: location }}
-          >
-            Trailer
-          </NavLink>
           <Outlet />
         </div>
       )}

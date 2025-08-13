@@ -1,6 +1,69 @@
+:root {
+  --genre-color: rgb(43, 43, 43);
+  --tagline-color: rgb(171, 171, 171);
+  --notes-color: rgb(112, 132, 147);
+  --review-background: rgb(222, 230, 236);
+  --review-small-color: rgb(248, 248, 248);
+}
+
+.review-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.review-item {
+  box-sizing: border-box;
+  text-align: left;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: var(--review-background);
+  width: 300px;
+}
+
+.avatar-name-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.review-author {
+  font-weight: 600;
+}
+
+.review-author-username {
+  font-size: 14px;
+  color: var(--notes-color);
+}
+
+.review {
+  padding: 15px;
+  border-radius: 10px;
+  color: var(--genre-color);
+  background-color: var(--review-small-color);
+}
+
+.review-created-at {
+  text-align: left;
+  margin-top: 10px;
+  color: var(--notes-color);
+}
+.edited {
+  margin-top: 10px;
+  text-align: right;
+  color: var(--notes-color);
+}
 .avatar {
   width: 50px;
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
+  border: 0.5px solid var(--tagline-color);
+}
+
+@media screen and (min-width: 768px) {
+ .review-item {
+  width: 600px;
+}
 }

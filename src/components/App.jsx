@@ -21,7 +21,6 @@ import { ApiComponent } from "../axios";
 //styles
 import "./App.css";
 
-
 function App() {
   ReactModal.setAppElement("#root");
   const location = useLocation();
@@ -32,9 +31,9 @@ function App() {
   };
 
   return (
-    <div>
-      <Suspense fallback={<Loader />}>
-        <Navigation goBack={goBack} />
+    <Suspense fallback={<Loader />}>
+      <Navigation goBack={goBack} />
+
         <Routes>
           <Route path="/" element={<HomePage imgPath={imgPath} />} />
           <Route path="/movies" element={<MoviesPage imgPath={imgPath} />} />
@@ -46,16 +45,13 @@ function App() {
               path="reviews"
               element={<MovieReviews imgPath={imgPath} />}
             />
-            <Route
-              path="trailer"
-              element={<MovieTrailer />}
-            />
+            <Route path="trailer" element={<MovieTrailer />} />
             <Route path="cast" element={<MovieCast imgPath={imgPath} />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </Suspense>
-    </div>
+     
+    </Suspense>
   );
 }
 

@@ -4,6 +4,7 @@ import { ApiComponent } from "../../axios";
 import Loader from "../Loader";
 import Error from "../Error";
 import css from "./MovieReviews.module.css";
+import { formatDate, formatText } from "../../helpers";
 
 export default function MovieReviews({ imgPath }) {
   const { movieId } = useParams();
@@ -28,10 +29,12 @@ export default function MovieReviews({ imgPath }) {
     }
     fetchCredits();
   }, [movieId]);
+
   return (
     <>
-      <ul>
-        {reviews.length > 0 &&
+      <h2>Reviews</h2>
+      <ul className={css["review-container"]}>
+        {!error &&
           reviews.map((review) => {
             const {
               created_at,
@@ -45,22 +48,33 @@ export default function MovieReviews({ imgPath }) {
               ? `${imgPath}${author_details.avatar_path}`
               : noAvatar;
             return (
-              <li key={id}>
-                <div>
+              <li className={css["review-item"]} key={id}>
+                <div className={css["avatar-name-container"]}>
                   <img className={css.avatar} src={avatarSrc} alt="" />
+                  <div>
+                    <p className={css["review-author"]}>{author}</p>
+                    <p className={css["review-author-username"]}>
+                      @{author_details.username}
+                    </p>
+                  </div>
                 </div>
+                <div className={css["review"]}>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: formatText(content) }}
+                  />
 
-                <p>{author}</p>
-                <p>@{author_details.username}</p>
-
-                <p>{content}</p>
-                <p>
-                  {created_at} {updated_at !== null ? "edited!" : ""}
+                  <p className={css["review-created-at"]}>
+                    {formatDate(created_at)}
+                  </p>
+                </div>
+                <p className={css["edited"]}>
+                  {updated_at !== null ? "edited!" : ""}
                 </p>
               </li>
             );
           })}
       </ul>
+      {reviews.length===0 && (<>No reviews yet..</>)}
       {loading && <Loader />}
       {error && <Error />}
     </>

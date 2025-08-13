@@ -1,18 +1,97 @@
 :root {
   --color: rgb(143, 0, 190);
+  --genre-color: rgb(43, 43, 43);
+  --tagline-color: rgb(171, 171, 171);
+  --link-color: rgb(0, 128, 96);
+  --link-hover-color: rgb(0, 110, 82);
+  --text-color: rgb(241, 241, 241);
+  --perfect-vote: rgb(0, 194, 10);
+  --good-vote: rgb(255, 174, 0);
+  --bad-vote: rgb(233, 0, 0);
+  --button-active:rgb(0, 80, 60);
 }
+.link {
+  background-color: var(--link-color);
+  color: var(--text-color);
+  border-radius: 4px;
+  padding: 3px;
+}
+.link:hover,
+.link:focus {
+  background-color: var(--link-hover-color);
+}
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.description-vote {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vote-average {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+}
+.vote-perfect {
+  color: var(--perfect-vote);
+  background:
+    linear-gradient(#222, #222) content-box no-repeat,
+    conic-gradient(var(--perfect-vote) 80%, 0, transparent) border-box;
+}
+.vote-good {
+  color: var(--good-vote);
+  background:
+    linear-gradient(#222, #222) content-box no-repeat,
+    conic-gradient(var(--good-vote) 60%, 0, transparent) border-box;
+}
+.vote-bad {
+  color: var(--bad-vote);
+  background:
+    linear-gradient(#222, #222) content-box no-repeat,
+    conic-gradient(var(--bad-vote) 30%, 0, transparent) border-box;
+}
+
 .container {
   padding: 15px;
 }
+.backdrop-wrapper {
+  position: absolute;
 
-.link:hover,
-.link:focus {
-  color: var(--color);
-  text-decoration: underline;
+  z-index: -1;
+  inset: 0;
+
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.backdrop {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.backdrop-wrapper::after {
+  content: "\A";
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .active {
-  color: var(--color);
+  background-color: var(--button-active);
   text-decoration: none;
 }
 
@@ -37,14 +116,17 @@
   padding: 0;
   gap: 10px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 .genre-item {
-  border: 1px solid #222;
+  font-size: 12px;
+  width: fit-content;
+  border: 1px solid var(--genre-color);
   border-radius: 10px;
   padding: 3px 8px;
-  opacity: 0.5;
-  background-color: rgba(34, 34, 34, 0.2);
+  color: var(--genre-color);
+  background-color: rgb(137, 137, 137);
 }
 
 .companies {
@@ -56,33 +138,55 @@
 .company {
   width: 30px;
 }
+
 .descriptions {
+  position: relative;
   text-align: left;
+  color: var(--text-color);
+  display: flex;
+
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
 }
 
-.description {
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.name {
+  font-size: 20px;
 }
 
 .poster {
-  width: 400px;
+  width: 150px;
   border-radius: 4px;
 }
 
 .tagline {
   font-style: italic;
-  color: #404040cc;
+  color: var(--tagline-color);
 }
 
-.tagline::before {
-  color: #ccc;
-  content: open-quote;
-  font-size: 4em;
-  line-height: 0.1em;
-  margin-right: 0.25em;
+.tagline-container {
+  display: flex;
+  gap: 10px;
+
   vertical-align: -0.4em;
+}
+
+.quote-icon {
+  fill: var(--tagline-color);
+  font-size: 1em;
+  line-height: 0.1em;
+}
+
+.countries-list {
+  display: flex;
+  gap: 5px;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 1080px;
+  }
+  .poster {
+    width: 300px;
+  }
 }

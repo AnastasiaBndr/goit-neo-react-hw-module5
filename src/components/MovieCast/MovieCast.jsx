@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ApiComponent } from "../../axios";
 import Loader from "../Loader";
 import Error from "../Error";
+import css from "./MovieCast.module.css";
 
 export default function MovieCast({ imgPath }) {
   const [credits, setCredits] = useState([]);
@@ -28,18 +29,28 @@ export default function MovieCast({ imgPath }) {
 
   return (
     <>
-      <ul>
+      <h2>Cast</h2>
+      <ul className={css["cast-container"]}>
         {credits.length > 0 &&
-          credits.map((credit) => {
-            return (
-              <li>
-                <img src={`${imgPath}${credit.profile_path}`} alt="" />
-                <p>{credit.name}</p>
-              </li>
-            );
-          })}
+          credits
+            .filter((credit) => credit.profile_path)
+            .map((credit) => {
+              return (
+                <li key={credit.id} className={css["image-container"]}>
+                  <img
+                    className={css["image"]}
+                    src={`${imgPath}${credit.profile_path}`}
+                    alt=""
+                  />
+                  <p className={css.name}>"{credit.character}"</p>
+                  <p className={css.name}>{credit.name}</p>
+                </li>
+              );
+            })}
       </ul>
+      {credits.length === 0 && <>No info..</>}
       {loading && <Loader />}
+
       {error && <Error />}
     </>
   );

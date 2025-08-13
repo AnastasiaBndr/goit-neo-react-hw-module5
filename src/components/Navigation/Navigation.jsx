@@ -29,7 +29,13 @@ export default function Navigation() {
   return (
     <>
       <div className={css.container}>
-        <Link to={location.state?.from || backLinkLocationRef.current}>
+        <Link
+          className={css["go-back"]}
+          to={
+            location.state?.from ||
+            backLinkLocationRef.current
+          }
+        >
           Go back
         </Link>
         <SearchBar onSubmit={onSubmit} />

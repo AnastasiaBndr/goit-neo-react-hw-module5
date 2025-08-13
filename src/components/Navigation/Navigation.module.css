@@ -5,15 +5,17 @@
 .container {
   display: flex;
   justify-content: space-between;
-  min-width: 100vw;
+  align-items: center;
+  width: 100vw;
   box-sizing: border-box;
   padding: 10px 20px;
   border-bottom: 1px solid black;
 }
 
+
 .navigation-container {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
 }
 
 .link:hover,
@@ -25,4 +27,13 @@
 .active {
   color: var(--color);
   text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+.navigation-container {
+  flex-direction: row;
+  gap: 20px;
+}
+
+
 }

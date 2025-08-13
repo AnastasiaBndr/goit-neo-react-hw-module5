@@ -6,15 +6,21 @@
 #root {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   align-items: center;
-  gap: 20px;
   text-align: center;
-  width: 100vw;
 }
 
 h1 {
   margin-bottom: 0;
   color: var(--button-color);
+}
+
+.link-in-review{
+  color: rgb(0, 140, 255);
+}
+.link-in-review:hover,.link-in-review:focus{
+  text-decoration: underline;
 }
 
 button {

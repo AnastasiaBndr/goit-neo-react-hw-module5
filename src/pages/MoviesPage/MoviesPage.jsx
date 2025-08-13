@@ -5,7 +5,6 @@ import MovieList from "../../components/MovieList";
 import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import { useSearchParams } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
 
 export default function MoviesPage({ imgPath }) {
   const [movies, setMovies] = useState([]);
@@ -18,9 +17,9 @@ export default function MoviesPage({ imgPath }) {
 
   useEffect(() => {
     if (!query) {
-      toast.error("Write something!");
       return;
     }
+
     async function fetchData() {
       const api = new ApiComponent();
       try {
@@ -32,7 +31,7 @@ export default function MoviesPage({ imgPath }) {
           setMovies([]);
         }
 
-        const data = await api.fetchByName(query,page);
+        const data = await api.fetchByName(query, page);
         const totalHits = data.total_pages;
         const totalPages = Math.ceil(totalHits / api.getLimit());
 
@@ -60,7 +59,6 @@ export default function MoviesPage({ imgPath }) {
       {loadMore && <LoadMoreBtn onClick={handleLoadMore} />}
       {loading && <Loader />}
       {error && <Error />}
-      <Toaster position="bottom-right" />
     </>
   );
 }

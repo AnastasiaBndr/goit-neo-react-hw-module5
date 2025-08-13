@@ -35,6 +35,7 @@ export default function MovieTrailer() {
 
   return (
     <>
+      <h2>Trailer</h2>
       {video && (
         <li key={video.id}>
           <iframe
@@ -46,6 +47,8 @@ export default function MovieTrailer() {
       {!video && !loading && (
         <div className={css["no-trailer"]}>No trailer...</div>
       )}
+
+      {!video && <>No reviews yet..</>}
 
       {loading && <Loader />}
       {error && <Error />}
